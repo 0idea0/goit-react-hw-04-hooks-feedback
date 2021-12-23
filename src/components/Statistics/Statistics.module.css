@@ -1,0 +1,11 @@
+.item:not(:last-child) {
+  margin-bottom: 5px;
+}
+
+.item {
+  list-style: none;
+}
+
+.value {
+  font-weight: 500;
+}

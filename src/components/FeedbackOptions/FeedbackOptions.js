@@ -1,25 +1,34 @@
-import PropTypes from 'prop-types';
+import style from './FeedbackOptions.module.css';
 
-import styles from './FeedbackOptions.module.css';
-
-const FeedbackOptions = ({ options, onIncrement }) => (
-  <ul className={styles.list}>
-    {options.map(option => (
+const FeedbackOptions = ({ onLeaveFeedback }) => {
+  return (
+    <div className={style.btnWrap}>
       <button
-        className={styles.button}
-        name={option}
-        key={option}
-        onClick={() => onIncrement(option)}
+        className={style.btn}
+        type="button"
+        name="good"
+        onClick={onLeaveFeedback}
       >
-        {option.replace(option[0], option[0].toUpperCase())}
+        Good
       </button>
-    ))}
-  </ul>
-);
-
-FeedbackOptions.propTypes = {
-  options: PropTypes.arrayOf(PropTypes.string.isRequired),
-  onIncrement: PropTypes.func.isRequired,
+      <button
+        className={style.btn}
+        type="button"
+        name="neutral"
+        onClick={onLeaveFeedback}
+      >
+        Neutral
+      </button>
+      <button
+        className={style.btn}
+        type="button"
+        name="bad"
+        onClick={onLeaveFeedback}
+      >
+        Bad
+      </button>
+    </div>
+  );
 };
 
 export default FeedbackOptions;

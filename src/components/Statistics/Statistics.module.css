@@ -1,11 +1,9 @@
-.item:not(:last-child) {
+.statList {
+  width: 200px;
+  margin: 0 auto;
+  font-size: 18px;
+}
+
+.statList li {
   margin-bottom: 5px;
-}
-
-.item {
-  list-style: none;
-}
-
-.value {
-  font-weight: 500;
 }

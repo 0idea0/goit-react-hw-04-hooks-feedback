@@ -1,13 +1,7 @@
-import PropTypes from 'prop-types';
+import s from './Notification.module.css';
 
-const Notification = ({ message }) => <p>{message}</p>;
-
-Notification.defaultProps = {
-  message: '',
-};
-
-Notification.propTypes = {
-  message: PropTypes.string,
+const Notification = ({ message }) => {
+  return <div className={s.notification}>{message}</div>;
 };
 
 export default Notification;

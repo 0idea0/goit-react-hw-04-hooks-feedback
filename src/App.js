@@ -1,54 +1,58 @@
-import React, { Component } from 'react';
+import { useState } from 'react';
+
+import Layout from './components/Layout';
 import Section from './components/Section';
-import FeedbackOptions from './components/FeedbackOptions';
+import Notification from './components/Notification';
 import Statistics from './components/Statistics';
+import CardInterface from './components/CardInterface';
+import FeedbackOptions from './components/FeedbackOptions';
 
-class App extends Component {
-  state = {
-    good: 0,
-    neutral: 0,
-    bad: 0,
-  };
+import './App.module.css';
 
-  countTotalFeedback = () => {
-    const { good, bad, neutral } = this.state;
-    return good + neutral + bad;
-  };
+const App = () => {
+  const [good, setGood] = useState(0);
+  const [neutral, setNeutral] = useState(0);
+  const [bad, setBad] = useState(0);
 
-  countPositiveFeedbackPercentage = () => {
-    const { good } = this.state;
-    const total = this.countTotalFeedback();
-    if (total) {
-      return `${Math.round((good / total) * 100)}`;
+  const clickHandler = event => {
+    switch (event.target.name) {
+      case 'good':
+        return setGood(prevState => prevState + 1);
+      case 'neutral':
+        return setNeutral(prevState => prevState + 1);
+      case 'bad':
+        return setBad(prevState => prevState + 1);
     }
-    return '0%';
   };
 
-  incrementHandler = feedback => {
-    this.setState(prevState => ({
-      [feedback]: prevState[feedback] + 1,
-    }));
+  const total = good + neutral + bad;
+
+  const countPositiveFeedbackPercentage = () => {
+    return Math.round((good / total) * 100);
   };
 
-  render() {
-    return (
-      <>
+  return (
+    <Layout>
+      <CardInterface>
         <Section title="Please leave feedback">
-          <FeedbackOptions
-            options={['good', 'neutral', 'bad']} // Передаем в компонент кнопок весь стейт
-            onIncrement={this.incrementHandler} // Метод для названий кнопок и инкримента
-          />
+          <FeedbackOptions onLeaveFeedback={clickHandler} />
         </Section>
         <Section title="Statistics">
-          <Statistics
-            {...this.state}
-            total={this.countTotalFeedback} // Передаем в компонент статистики подсчет всех отзывов
-            positivePercentage={this.countPositiveFeedbackPercentage} // Туда же передаем подсчет хороших отзывов
-          />
+          {total ? (
+            <Statistics
+              good={good}
+              neutral={neutral}
+              bad={bad}
+              total={total}
+              positivePercentage={countPositiveFeedbackPercentage()}
+            />
+          ) : (
+            <Notification message="No feedback given" />
+          )}
         </Section>
-      </>
-    );
-  }
-}
+      </CardInterface>
+    </Layout>
+  );
+};
 
 export default App;
